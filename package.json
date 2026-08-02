@@ -1,8 +1,8 @@
 {
-  "name": "template-repo",
+  "name": "battleship",
   "version": "1.0.0",
   "type": "module",
-  "description": "         UPDATE THIS FIELD!!!          ",
+  "description": "Battleship project based on The Odin Project curriculum.",
   "main": "main.js",
   "scripts": {
     "test": "jest",
@@ -16,15 +16,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/J0e-Quan/TEMPLATE-REPO.git"
+    "url": "git+https://github.com/J0e-Quan/battleship.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/J0e-Quan/TEMPLATE-REPO/issues"
+    "url": "https://github.com/J0e-Quan/battleship/issues"
   },
-  "homepage": "https://github.com/J0e-Quan/TEMPLATE-REPO#readme",
+  "homepage": "https://github.com/J0e-Quan/battleship#readme",
   "devDependencies": {
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^8.0.0",
