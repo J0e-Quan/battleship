@@ -34,7 +34,7 @@ export function createGameboard() {
       return this
     },
     receiveAttack(targetX, targetY) {
-      for (const ship of ships) {
+      for (const ship of this.ships) {
         for (const coord of ship) {
           if (coord.x === targetX && coord.y === targetY) {
             ship.hit()
@@ -42,8 +42,8 @@ export function createGameboard() {
           }
         }
       }
-      this.misses.push({targetX, targetY})
-      return 'miss at (' + targetX + ' , ' + targetY + ')'
+      this.misses.push({x: targetX, y: targetY})
+      return this.misses
     }
   }
 }

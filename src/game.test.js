@@ -21,5 +21,13 @@ test('prevent placing ships that extend out of the gameboard (but originate with
 })
 
 test('create ship correctly in gameboard', () => {
-  expect(createGameboard().placeShip(2, 'horizontal', 2, 5).ships).toStrictEqual([[{"x": 2, "y": 5}, {"x": 3, "y": 5}]])
+  expect(createGameboard().placeShip(2, 'horizontal', 2, 5).ships).toStrictEqual([[{x: 2, y: 5}, {x: 3, y: 5}]])
+})
+
+test('miss correctly', () => {
+  expect(createGameboard().placeShip(3, 'vertical', 5, 3).receiveAttack(6, 3)).toStrictEqual([{x: 6, y: 3}])
+})
+
+test('trigger hit() correctly when hitting a ship', () => {
+  expect(createGameboard().placeShip(4, 'horizontal', 2, 6).receiveAttack(4, 6)).toStrictEqual(1)
 })
