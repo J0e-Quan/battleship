@@ -1,10 +1,12 @@
 # NPM SCRIPT INSTRUCTIONS
+
 - npm run dev to open webpack dev server
 - npm run cleanup to check for lint and prettier errors
 - npm run deploy to publish project when done
 - check that github pages is set to gh-pages branch in repo settings
 
 # GIT BRANCH WORKFLOW
+
 1. create a new branch with `git checkout -b branch-name`
 2. write code on new branch
 3. use git push origin branch-name
