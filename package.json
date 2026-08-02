@@ -1,0 +1,46 @@
+{
+  "name": "template-repo",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "         UPDATE THIS FIELD!!!          ",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "webpack serve --config webpack.dev.cjs",
+    "build": "webpack --config webpack.prod.cjs",
+    "deploy": "npm run cleanup && npm run test && npm run build && gh-pages -d dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "cleanup": "npm run format && npm run lint:fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J0e-Quan/TEMPLATE-REPO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/J0e-Quan/TEMPLATE-REPO/issues"
+  },
+  "homepage": "https://github.com/J0e-Quan/TEMPLATE-REPO#readme",
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^8.0.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-config-standard": "^17.1.0",
+    "gh-pages": "^6.3.0",
+    "globals": "^17.3.0",
+    "html-webpack-plugin": "^5.6.6",
+    "jest": "^30.3.0",
+    "mini-css-extract-plugin": "^2.10.0",
+    "prettier": "^3.8.1",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.104.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.3",
+    "webpack-merge": "^6.0.1"
+  }
+}
