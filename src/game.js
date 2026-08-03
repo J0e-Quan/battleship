@@ -14,13 +14,12 @@ export function createShip(length, direction, x, y) {
   return {
     length,
     hits: 0,
-    isSunk: false,
     hit() {
       this.hits++
       return this
     },
-    checkSunk() {
-      return this.isSunk = (this.hits >= this.length)
+    isSunk() {
+      return this.hits >= this.length
     },
     coordinates: getShipCoordinates(direction, x, y)
   }
@@ -62,6 +61,14 @@ export function createGameboard() {
       }
       this.misses.push({x: targetX, y: targetY})
       return this
+    },
+    areAllShipsSunk() {
+      for (const ship of this.ships) {
+        if (ship.isSunk() === false) {
+          return this
+        }
+      }
+      return true
     }
   }
 }

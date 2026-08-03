@@ -9,7 +9,7 @@ test('increase hits after using hit()', () => {
 })
 
 test('mark ship as sunk if hits >= length', () => {
-  expect(createShip(2).hit().hit().checkSunk()).toBe(true)
+  expect(createShip(2).hit().hit().isSunk()).toBe(true)
 })
 
 test('prevent placing ships out of the gameboard', () => {
@@ -46,4 +46,12 @@ const mockMultipleShips = jest.fn(() => {
 
 test('multiple ships keep track of their individual hits correctly', () => {
   expect(mockMultipleShips().receiveAttack(3, 5).receiveAttack(9, 9).receiveAttack(4, 5).receiveAttack(8, 4).ships[0].hits).toBe(2)
+})
+
+test('gameboard correctly detects if all ships are sunk', () => {
+  expect(createGameboard().placeShip(2, 'vertical', 4, 9).placeShip(1, 'horizontal', 3, 6).receiveAttack(3, 6).receiveAttack(4, 9).receiveAttack(4, 10).areAllShipsSunk()).toBe(true)
+})
+
+test('gameboard correctly detects that not all ships are sunk', () => {
+  expect(createGameboard().placeShip(2, 'vertical', 4, 9).placeShip(1, 'horizontal', 3, 6).receiveAttack(3, 6).receiveAttack(4, 9).receiveAttack(4, 2).areAllShipsSunk()).not.toBe(true)
 })
