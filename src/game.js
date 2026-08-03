@@ -29,6 +29,7 @@ export function createGameboard() {
   return {
     ships: [],
     misses: [],
+    hits: [],
     placeShip(length, direction, x, y) {
       const newShip = createShip(length, direction, x, y)
       // check if ship is placed/extends out of the gameboard
@@ -55,6 +56,7 @@ export function createGameboard() {
         for (const coord of ship.coordinates) {
           if (coord.x === targetX && coord.y === targetY) {
             ship.hit()
+            this.hits.push({x: targetX, y: targetY})
             return this
           }
         }

@@ -32,6 +32,10 @@ test('miss correctly', () => {
   expect(createGameboard().placeShip(3, 'vertical', 5, 3).receiveAttack(6, 3).misses).toStrictEqual([{x: 6, y: 3}])
 })
 
+test('keep track of hits', () => {
+  expect(createGameboard().placeShip(4, 'horizontal', 2, 3).receiveAttack(4, 3).hits).toStrictEqual([{x: 4, y: 3}])
+})
+
 test('list multiple misses correctly', () => {
   expect(createGameboard().placeShip(3, 'vertical', 5, 3).receiveAttack(6, 3).receiveAttack(6, 4).receiveAttack(5, 7).misses).toStrictEqual([{x: 6, y: 3}, {x: 6, y: 4}, {x: 5, y: 7}])
 })
