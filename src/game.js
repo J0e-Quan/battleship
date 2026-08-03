@@ -31,7 +31,7 @@ export function createGameboard() {
     ships: [],
     misses: [],
     placeShip(length, direction, x, y) {
-      if (x + length > 10 || y + length > 10) {
+      if ((direction === 'horizontal' && x + length > 10 )||(direction === 'vertical' && y + length > 10)) {
         return null
       }
       this.ships.push(createShip(length, direction, x, y))

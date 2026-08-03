@@ -35,3 +35,11 @@ test('list multiple misses correctly', () => {
 test('trigger hit() correctly when hitting a ship', () => {
   expect(createGameboard().placeShip(4, 'horizontal', 2, 6).receiveAttack(4, 6).ships[0].hits).toStrictEqual(1)
 })
+
+const mockMultipleShips = jest.fn(() => {
+  return createGameboard().placeShip(3, 'horizontal', 2, 5).placeShip(5, 'vertical', 8, 2).placeShip(2, 'horizontal', 4, 7)
+})
+
+test('multiple ships keep track of their individual hits correctly', () => {
+  expect(mockMultipleShips().receiveAttack(3, 5).receiveAttack(9, 9).receiveAttack(4, 5).receiveAttack(8, 4).ships[0].hits).toBe(2)
+})
