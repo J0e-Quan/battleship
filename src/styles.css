@@ -55,3 +55,56 @@ button {
   background-color: none;
   outline: none;
 }
+
+body {
+  background-color: #434343;
+  color: white;
+  padding: 1rem 2rem;
+}
+
+h1 {
+  font-size: 4rem;
+  width: fit-content;
+  margin-inline: auto;
+  padding: 0.5rem 1rem;
+  border: 2px solid white;
+  margin-bottom: 1rem;
+}
+
+.instruction {
+  font-size: 2rem;
+  width: fit-content;
+  margin-inline: auto;
+  margin-bottom: 1rem;
+}
+
+.gameboards {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+h2 {
+  width: fit-content;
+  font-size: 2.5rem;
+  margin-inline: auto;
+  margin-bottom: 0.5rem;
+}
+
+.gameboard-wrapper > div {
+  min-width: 500px;
+  max-width: 1000px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.point {
+  padding: 1.5rem;
+  background-color: rgb(200, 200, 200);
+  border: 1px solid black;
+}
