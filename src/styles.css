@@ -109,7 +109,7 @@ h2 {
   border: 1px solid black;
 }
 
-.point:hover {
+.gameboard-wrapper:not(.inactive) .point:hover {
   background-color: white;
 }
 
