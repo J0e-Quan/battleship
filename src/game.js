@@ -31,10 +31,24 @@ export function createGameboard() {
     ships: [],
     misses: [],
     placeShip(length, direction, x, y) {
+      const newShip = createShip(length, direction, x, y)
+      // check if ship is placed/extends out of the gameboard
       if ((direction === 'horizontal' && x + length > 10 )||(direction === 'vertical' && y + length > 10)) {
         return null
       }
-      this.ships.push(createShip(length, direction, x, y))
+      // check if ship coords overlap
+      for (const point of newShip.coordinates) {
+        for (const existingShip of this.ships) {
+          for (const coord of existingShip.coordinates) {
+            if (coord.x === point.x && coord.y === point.y) {
+              return null
+            }
+          }
+        }
+      }
+      if (newShip !== null) {
+        this.ships.push(newShip)
+      }
       return this
     },
     receiveAttack(targetX, targetY) {
