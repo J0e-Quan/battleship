@@ -33,7 +33,7 @@ export function createGameboard() {
     placeShip(length, direction, x, y) {
       const newShip = createShip(length, direction, x, y)
       // check if ship is placed/extends out of the gameboard
-      if ((direction === 'horizontal' && x + length > 10 )||(direction === 'vertical' && y + length > 10)) {
+      if ((direction === 'horizontal' && x + length > 11 )||(direction === 'vertical' && y + length > 11)) {
         return null
       }
       // check if ship coords overlap
