@@ -116,3 +116,11 @@ h2 {
 .inactive {
   filter: brightness(0.5);
 }
+
+.ship {
+  background-color: #1a3be0;
+}
+
+.enemy {
+  background-color: red;
+}
