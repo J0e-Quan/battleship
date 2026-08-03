@@ -108,3 +108,11 @@ h2 {
   background-color: rgb(200, 200, 200);
   border: 1px solid black;
 }
+
+.point:hover {
+  background-color: white;
+}
+
+.inactive {
+  filter: brightness(0.5);
+}
