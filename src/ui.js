@@ -3,6 +3,9 @@ import { createPlayer } from "./game.js"
 
 const human = createPlayer('human')
 const computer = createPlayer('computer')
+const humanGameboard = document.getElementById('human-gameboard')
+const computerGameboard = document.getElementById('computer-gameboard')
+let isHumanTurn = true
 renderGameboard('human')
 renderGameboard('computer')
 
@@ -35,4 +38,17 @@ function renderHumanShips() {
       point.classList.add('ship')
     }
   }
+}
+
+computerGameboard.addEventListener('click', sendHit)
+
+function sendHit(button) {
+  const targetId = button.target.id
+  // split the id up into its different components for easier use
+  const targetIdArray = targetId.split('-')
+  const targetDetails = {
+    x: targetIdArray[1],
+    y: targetIdArray[2]
+  }
+  const result = computer.gameboard.receiveAttack(targetDetails.x, targetDetails.y)
 }
