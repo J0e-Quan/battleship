@@ -1,4 +1,4 @@
-import { createGameboard, createShip } from "./game.js";
+import { createGameboard, createPlayer, createShip } from "./game.js";
 
 test('create ship that is 3 spots long', () => {
   expect(createShip(3).length).toBe(3)
@@ -58,4 +58,12 @@ test('gameboard correctly detects if all ships are sunk', () => {
 
 test('gameboard correctly detects that not all ships are sunk', () => {
   expect(createGameboard().placeShip(2, 'vertical', 4, 9).placeShip(1, 'horizontal', 3, 6).receiveAttack(3, 6).receiveAttack(4, 9).receiveAttack(4, 2).areAllShipsSunk()).not.toBe(true)
+})
+
+test('players are created correctly', () => {
+  expect(createPlayer('computer').type).toBe('computer')
+})
+
+test('gameboard created for a player works correctly', () => {
+  expect(createPlayer('human').gameboard.placeShip(1, 'horizontal', 3, 5).placeShip(2, 'vertical', 1, 4).receiveAttack(3, 5).receiveAttack(1, 5).areAllShipsSunk()).not.toBe(true)
 })

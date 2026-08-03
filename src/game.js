@@ -74,3 +74,10 @@ export function createGameboard() {
     }
   }
 }
+
+export function createPlayer(type) {
+  return {
+    type,
+    gameboard: createGameboard()
+  }
+}
