@@ -1,4 +1,16 @@
-export function createShip(length) {
+export function createShip(length, direction, x, y) {
+  function getShipCoordinates(direction, x, y) {
+    const coordinates = []
+    for (let i = 0; i < length; i++) {
+      if (direction === 'horizontal') {
+        coordinates.push({x: x + i, y})
+      } else {
+        coordinates.push({x, y: y + i})
+      }
+    }
+    return coordinates
+  }
+
   return {
     length,
     hits: 0,
@@ -9,7 +21,8 @@ export function createShip(length) {
     },
     checkSunk() {
       return this.isSunk = (this.hits >= this.length)
-    }
+    },
+    coordinates: getShipCoordinates(direction, x, y)
   }
 }
 
@@ -21,29 +34,20 @@ export function createGameboard() {
       if (x + length > 10 || y + length > 10) {
         return null
       }
-      createShip(length)
-      const coords = []
-      for (let i = 0; i < length; i++) {
-        if (direction === 'horizontal') {
-          coords.push({x: x + i, y})
-        } else {
-          coords.push({x, y: y + i})
-        }
-      }
-      this.ships.push(coords)
+      this.ships.push(createShip(length, direction, x, y))
       return this
     },
     receiveAttack(targetX, targetY) {
       for (const ship of this.ships) {
-        for (const coord of ship) {
+        for (const coord of ship.coordinates) {
           if (coord.x === targetX && coord.y === targetY) {
             ship.hit()
-            return ship.hits
+            return this
           }
         }
       }
       this.misses.push({x: targetX, y: targetY})
-      return this.misses
+      return this
     }
   }
 }
