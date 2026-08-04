@@ -104,10 +104,18 @@ function checkSunk(attack, type) {
     const hitShip = computer.gameboard.ships.find((ship) => {
       return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
     })
-    console.log(hitShip)
     if (hitShip !== undefined) {
       if (hitShip.isSunk()) {
         return 'You sunk a ' + hitShip.length + '-long ship!' 
+      }
+    }
+  } else if (type === 'human') {
+    const hitShip = human.gameboard.ships.find((ship) => {
+      return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
+    })
+    if (hitShip !== undefined) {
+      if (hitShip.isSunk()) {
+        return 'The computer sunk your ' + hitShip.length + '-long ship!' 
       }
     }
   }
