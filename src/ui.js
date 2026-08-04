@@ -8,6 +8,7 @@ const computerGameboard = document.getElementById('computer-gameboard')
 const humanUI = document.querySelector('.human.gameboard-wrapper')
 const computerUI = document.querySelector('.computer.gameboard-wrapper')
 let isHumanTurn = false
+let mode = 'computer'
 renderGameboard('human')
 renderGameboard('computer')
 randomiseShipPlacements(human.gameboard)
@@ -188,12 +189,9 @@ randomiseButton.addEventListener('click', (e) => {
   randomiseShipPlacements(human.gameboard)
 })
 const startButton = document.querySelector('.start')
-startButton.addEventListener('click', (e) => {
-  const uiButtons = document.querySelector('.ui-buttons')
-  flipTurn()
-  updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
-  uiButtons.remove()
-})
+startButton.addEventListener('click', startGame)
+const modeToggle = document.querySelector('.mode')
+modeToggle.addEventListener('change', changeMode)
 
 function randomiseShipPlacements(gameboard) {
   // clear ships array before inserting new ones
@@ -216,4 +214,57 @@ function randomiseShipPlacements(gameboard) {
     }
   }
   renderHumanShips()
+}
+
+function startGame() {
+  if (mode === 'computer') {
+    const uiButtons = document.querySelector('.ui-buttons')
+    flipTurn()
+    updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
+    uiButtons.remove()
+  } else if (mode === 'human') {
+    updateInstruction("Player 2, choose the position of your ships!")
+    startButton.textContent = 'Start Game'
+    blockPeeking(2)
+  }
+}
+
+function changeMode(toggle) {
+  mode = toggle.target.value
+  if (mode === 'computer') {
+    const p1Title = document.querySelector('.human-title')
+    p1Title.textContent = 'Human'
+    const p2Title = document.querySelector('.computer-title')
+    p2Title.textContent = 'Computer'
+    startButton.textContent = 'Start Game'
+    updateInstruction('Choose the position of your ships!')
+  } else if (mode === 'human') {
+    const p1Title = document.querySelector('.human-title')
+    p1Title.textContent = 'Player 1'
+    const p2Title = document.querySelector('.computer-title')
+    p2Title.textContent = 'Player 2'
+    startButton.textContent = 'Continue'
+    updateInstruction('Player 1, choose the position of your ships!')
+  }
+}
+
+function blockPeeking(nextPlayer) {
+  const modal = document.createElement('div')
+  modal.classList.add('modal')
+  const title = document.createElement('h3')
+  title.textContent = 'No Peeking!'
+  modal.appendChild(title)
+  const text = document.createElement('p')
+  text.classList.add('modal-text')
+  text.textContent = "It's time to switch players! Please pass the device to Player " + nextPlayer + "!"
+  modal.appendChild(text)
+  const closeButton = document.createElement('button')
+  closeButton.type = 'button'
+  closeButton.classList.add('close', 'ui-button')
+  closeButton.textContent = "Done!"
+  closeButton.addEventListener('click', (e) => {
+    modal.remove()
+  })
+  modal.appendChild(closeButton)
+  document.body.appendChild(modal)
 }
