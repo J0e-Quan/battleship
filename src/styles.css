@@ -126,6 +126,10 @@ h2 {
   background-color: rgb(206, 26, 26);
 }
 
-.computer.miss {
-  background-color: black;
+.human.hit {
+  background-color: #06165e;
+}
+
+.miss {
+  background-color: rgb(67, 67, 67);
 }

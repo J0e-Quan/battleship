@@ -48,9 +48,12 @@ function flipTurn() {
   if (isHumanTurn === true) {
     humanUI.classList.add('inactive')
     computerUI.classList.remove('inactive')
+    computerGameboard.addEventListener('click', sendAttack)
   } else {
     humanUI.classList.remove('inactive')
     computerUI.classList.add('inactive')
+    computerGameboard.removeEventListener('click', sendAttack)
+    computerAttack()
   }
 }
 
@@ -83,7 +86,30 @@ function renderAttack(attack, type) {
   }
   setTimeout(() => {
     flipTurn()
-    updateInstruction("It's the computer's turn!")
+    if (isHumanTurn === false) {
+      updateInstruction("It's the computer's turn!")
+    } else {
+      updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
+    }
   }, THREE_SECONDS);
 }
 
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function computerAttack() {
+  const attack = {
+    x: randomNumber(1, 10),
+    y: randomNumber(1, 10)
+  }
+  // checks if the point was already attacked
+  const testPoint = document.getElementById('human-' + attack.x + '-' + attack.y)
+  if (testPoint.classList.contains('hit') || testPoint.classList.contains('miss')) {
+    computerAttack()
+  } else {
+    setTimeout(() => {
+      renderAttack(human.gameboard.receiveAttack(attack.x, attack.y), 'human')
+    }, THREE_SECONDS);
+  }
+}
