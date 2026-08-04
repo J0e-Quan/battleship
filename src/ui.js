@@ -51,4 +51,5 @@ function sendHit(button) {
     y: targetIdArray[2]
   }
   const result = computer.gameboard.receiveAttack(targetDetails.x, targetDetails.y)
+  console.log(result)
 }

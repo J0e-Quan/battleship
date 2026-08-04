@@ -29,35 +29,50 @@ test('ships cannot overlap', () => {
 })
 
 test('miss correctly', () => {
-  expect(createGameboard().placeShip(3, 'vertical', 5, 3).receiveAttack(6, 3).misses).toStrictEqual([{x: 6, y: 3}])
+  expect(createGameboard().placeShip(3, 'vertical', 5, 3).receiveAttack(6, 3)).toStrictEqual({x: 6, y: 3, type: 'miss'})
 })
 
 test('keep track of hits', () => {
-  expect(createGameboard().placeShip(4, 'horizontal', 2, 3).receiveAttack(4, 3).hits).toStrictEqual([{x: 4, y: 3}])
+  expect(createGameboard().placeShip(4, 'horizontal', 2, 3).receiveAttack(4, 3)).toStrictEqual({x: 4, y: 3, type: 'hit'})
 })
 
 test('list multiple misses correctly', () => {
-  expect(createGameboard().placeShip(3, 'vertical', 5, 3).receiveAttack(6, 3).receiveAttack(6, 4).receiveAttack(5, 7).misses).toStrictEqual([{x: 6, y: 3}, {x: 6, y: 4}, {x: 5, y: 7}])
+  const gameboard = createGameboard().placeShip(3, 'vertical', 5, 3)
+  gameboard.receiveAttack(6, 3)
+  gameboard.receiveAttack(6, 4)
+  gameboard.receiveAttack(5, 7)
+  expect(gameboard.misses).toStrictEqual([{x: 6, y: 3, type: 'miss'}, {x: 6, y: 4, type: 'miss'}, {x: 5, y: 7, type: 'miss'}])
 })
 
 test('trigger hit() correctly when hitting a ship', () => {
-  expect(createGameboard().placeShip(4, 'horizontal', 2, 6).receiveAttack(4, 6).ships[0].hits).toStrictEqual(1)
-})
-
-const mockMultipleShips = jest.fn(() => {
-  return createGameboard().placeShip(3, 'horizontal', 2, 5).placeShip(5, 'vertical', 8, 2).placeShip(2, 'horizontal', 4, 7)
+  const gameboard = createGameboard().placeShip(4, 'horizontal', 2, 6)
+  gameboard.receiveAttack(4, 6)
+  expect(gameboard.ships[0].hits).toStrictEqual(1)
 })
 
 test('multiple ships keep track of their individual hits correctly', () => {
-  expect(mockMultipleShips().receiveAttack(3, 5).receiveAttack(9, 9).receiveAttack(4, 5).receiveAttack(8, 4).ships[0].hits).toBe(2)
+  const gameboard = createGameboard().placeShip(3, 'horizontal', 2, 5).placeShip(5, 'vertical', 8, 2).placeShip(2, 'horizontal', 4, 7)
+  gameboard.receiveAttack(3, 5)
+  gameboard.receiveAttack(9, 9)
+  gameboard.receiveAttack(4, 5)
+  gameboard.receiveAttack(8, 4)
+  expect(gameboard.ships[0].hits).toBe(2)
 })
 
 test('gameboard correctly detects if all ships are sunk', () => {
-  expect(createGameboard().placeShip(2, 'vertical', 4, 9).placeShip(1, 'horizontal', 3, 6).receiveAttack(3, 6).receiveAttack(4, 9).receiveAttack(4, 10).areAllShipsSunk()).toBe(true)
+  const gameboard = createGameboard().placeShip(2, 'vertical', 4, 9).placeShip(1, 'horizontal', 3, 6)
+  gameboard.receiveAttack(3, 6)
+  gameboard.receiveAttack(4, 9)
+  gameboard.receiveAttack(4, 10)
+  expect(gameboard.areAllShipsSunk()).toBe(true)
 })
 
 test('gameboard correctly detects that not all ships are sunk', () => {
-  expect(createGameboard().placeShip(2, 'vertical', 4, 9).placeShip(1, 'horizontal', 3, 6).receiveAttack(3, 6).receiveAttack(4, 9).receiveAttack(4, 2).areAllShipsSunk()).not.toBe(true)
+  const gameboard = createGameboard().placeShip(2, 'vertical', 4, 9).placeShip(1, 'horizontal', 3, 6)
+  gameboard.receiveAttack(3, 6)
+  gameboard.receiveAttack(4, 9)
+  gameboard.receiveAttack(4, 2)
+  expect(gameboard.areAllShipsSunk()).toBe(false)
 })
 
 test('players are created correctly', () => {
@@ -65,5 +80,9 @@ test('players are created correctly', () => {
 })
 
 test('gameboard created for a player works correctly', () => {
-  expect(createPlayer('human').gameboard.placeShip(1, 'horizontal', 3, 5).placeShip(2, 'vertical', 1, 4).receiveAttack(3, 5).receiveAttack(1, 5).areAllShipsSunk()).not.toBe(true)
+  const player = createPlayer('human')
+  player.gameboard.placeShip(1, 'horizontal', 3, 5).placeShip(2, 'vertical', 1, 4)
+  player.gameboard.receiveAttack(3, 5)
+  player.gameboard.receiveAttack(1, 5)
+  expect(player.gameboard.areAllShipsSunk()).toBe(false)
 })

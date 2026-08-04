@@ -56,18 +56,18 @@ export function createGameboard() {
         for (const coord of ship.coordinates) {
           if (coord.x === targetX && coord.y === targetY) {
             ship.hit()
-            this.hits.push({x: targetX, y: targetY})
-            return this
+            this.hits.push({x: targetX, y: targetY, type: 'hit'})
+            return this.hits.at(-1)
           }
         }
       }
-      this.misses.push({x: targetX, y: targetY})
-      return this
+      this.misses.push({x: targetX, y: targetY, type: 'miss'})
+      return this.misses.at(-1)
     },
     areAllShipsSunk() {
       for (const ship of this.ships) {
         if (ship.isSunk() === false) {
-          return this
+          return false
         }
       }
       return true
