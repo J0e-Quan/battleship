@@ -8,7 +8,7 @@ const humanGameboard = document.getElementById('human-gameboard')
 const computerGameboard = document.getElementById('computer-gameboard')
 const humanUI = document.querySelector('.human.gameboard-wrapper')
 const computerUI = document.querySelector('.computer.gameboard-wrapper')
-let isHumanTurn = true
+let isHumanTurn = false
 renderGameboard('human')
 renderGameboard('computer')
 randomiseShipPlacements(human.gameboard)
@@ -174,6 +174,13 @@ function endGame(winner) {
 const randomiseButton = document.querySelector('.randomise')
 randomiseButton.addEventListener('click', (e) => {
   randomiseShipPlacements(human.gameboard)
+})
+const startButton = document.querySelector('.start')
+startButton.addEventListener('click', (e) => {
+  const uiButtons = document.querySelector('.ui-buttons')
+  flipTurn()
+  updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
+  uiButtons.remove()
 })
 
 function randomiseShipPlacements(gameboard) {
