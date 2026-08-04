@@ -87,6 +87,15 @@ function renderAttack(attack, type) {
     if (shipStatus === undefined) {
       updateInstruction("Hit!")
     } else {
+        if (computer.gameboard.areAllShipsSunk()) {
+          alert("Human Wins! All computer ships have been sunk!")
+          updateInstruction("Human Wins! All computer ships have been sunk!")
+          return
+        } else if (human.gameboard.areAllShipsSunk()) {
+          alert("Computer Wins! All human ships have been sunk!")
+          updateInstruction("Computer Wins! All human ships have been sunk!")
+          return
+        }
       updateInstruction("Hit! " + shipStatus)
     }
   } else {
@@ -108,25 +117,15 @@ function checkSunk(attack, type) {
     const hitShip = computer.gameboard.ships.find((ship) => {
       return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
     })
-    if (hitShip !== undefined) {
-      if (hitShip.isSunk()) {
-        if (computer.gameboard.areAllShipsSunk()) {
-          endGame('human')
-        }
+    if (hitShip !== undefined && hitShip.isSunk()) {
         return "You sunk the computer's " + hitShip.length + '-long ship!'
-      }
     }
   } else if (type === 'human') {
     const hitShip = human.gameboard.ships.find((ship) => {
       return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
     })
-    if (hitShip !== undefined) {
-      if (hitShip.isSunk()) {
-        if (human.gameboard.areAllShipsSunk()) {
-          endGame('computer')
-        }
-        return 'The computer sunk your ' + hitShip.length + '-long ship!' 
-      }
+    if (hitShip !== undefined && hitShip.isSunk()) {
+      return 'The computer sunk your ' + hitShip.length + '-long ship!' 
     }
   }
 }
@@ -148,13 +147,5 @@ function computerAttack() {
     setTimeout(() => {
       renderAttack(human.gameboard.receiveAttack(attack.x, attack.y), 'human')
     }, THREE_SECONDS);
-  }
-}
-
-function endGame(winner) {
-  if (winner === 'human') {
-    updateInstruction("Human Wins! All computer ships have been sunk!")
-  } else if (winner === 'computer') {
-    updateInstruction("Computer Wins! All human ships have been sunk!")
   }
 }
