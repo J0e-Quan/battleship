@@ -155,7 +155,7 @@ function computerAttack() {
 
 function endGame(winner) {
   if (winner === 'human') {
-    updateInstruction("Human Wins! All computer ships have been sunk!")
+    updateInstruction("Human Wins! All computer ships have been sunk! Refresh the page to play again...")
     const humanName = document.querySelector('.human-title')
     humanName.classList.add('winner')
     humanUI.classList.remove('inactive')
@@ -167,7 +167,7 @@ function endGame(winner) {
     computerName.classList.add('winner')
     computerUI.classList.remove('inactive')
     computerUI.classList.add('inactive')
-    alert("Computer Wins! All human ships have been sunk!")
+    alert("Computer Wins! All human ships have been sunk! Refresh the page to play again...")
   }
 }
 
