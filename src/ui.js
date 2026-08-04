@@ -79,7 +79,12 @@ function renderAttack(attack, type) {
   const point = document.getElementById(type + '-' + attack.x + '-' + attack.y)
   if (attack.type === 'hit') {
     point.classList.add('hit')
-    updateInstruction("Hit!")
+    const shipStatus = checkSunk(attack, type)
+    if (shipStatus === undefined) {
+      updateInstruction("Hit!")
+    } else {
+      updateInstruction("Hit! " + shipStatus)
+    }
   } else {
     point.classList.add('miss')
     updateInstruction("Miss!")
@@ -92,6 +97,20 @@ function renderAttack(attack, type) {
       updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
     }
   }, THREE_SECONDS);
+}
+
+function checkSunk(attack, type) {
+  if (type === 'computer') {
+    const hitShip = computer.gameboard.ships.find((ship) => {
+      return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
+    })
+    console.log(hitShip)
+    if (hitShip !== undefined) {
+      if (hitShip.isSunk()) {
+        return 'You sunk a ' + hitShip.length + '-long ship!' 
+      }
+    }
+  }
 }
 
 function randomNumber(min, max) {
