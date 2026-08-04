@@ -48,11 +48,10 @@ function flipTurn() {
   if (isHumanTurn === true) {
     humanUI.classList.add('inactive')
     computerUI.classList.remove('inactive')
-    computerGameboard.addEventListener('click', sendAttack)
+    computerGameboard.addEventListener('click', sendAttack, {once: true})
   } else {
     humanUI.classList.remove('inactive')
     computerUI.classList.add('inactive')
-    computerGameboard.removeEventListener('click', sendAttack)
     computerAttack()
   }
 }
@@ -62,7 +61,7 @@ function updateInstruction(text) {
   instruction.textContent = text
 }
 
-computerGameboard.addEventListener('click', sendAttack)
+computerGameboard.addEventListener('click', sendAttack, {once: true})
 
 function sendAttack(button) {
   const targetId = button.target.id
@@ -106,7 +105,10 @@ function checkSunk(attack, type) {
     })
     if (hitShip !== undefined) {
       if (hitShip.isSunk()) {
-        return 'You sunk a ' + hitShip.length + '-long ship!' 
+        if (computer.gameboard.areAllShipsSunk()) {
+          endGame('human')
+        }
+        return 'You sunk a ' + hitShip.length + '-long ship!'
       }
     }
   } else if (type === 'human') {
@@ -115,6 +117,9 @@ function checkSunk(attack, type) {
     })
     if (hitShip !== undefined) {
       if (hitShip.isSunk()) {
+        if (human.gameboard.areAllShipsSunk()) {
+          endGame('computer')
+        }
         return 'The computer sunk your ' + hitShip.length + '-long ship!' 
       }
     }
@@ -138,5 +143,13 @@ function computerAttack() {
     setTimeout(() => {
       renderAttack(human.gameboard.receiveAttack(attack.x, attack.y), 'human')
     }, THREE_SECONDS);
+  }
+}
+
+function endGame(winner) {
+  if (winner === 'human') {
+    updateInstruction("Human Wins! All computer ships have been sunk!")
+  } else if (winner === 'computer') {
+    updateInstruction("Computer Wins! All human ships have been sunk!")
   }
 }
