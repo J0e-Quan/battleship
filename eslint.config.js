@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 import js from '@eslint/js'
 import globals from 'globals'
 import prettierConfig from 'eslint-config-prettier'
-import {defineConfig} from 'eslint/config';
+import { defineConfig } from 'eslint/config'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -32,7 +32,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
-        ...globals.jest,
+        ...globals.jest
       }
     },
     rules: {

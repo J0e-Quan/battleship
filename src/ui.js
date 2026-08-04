@@ -1,5 +1,5 @@
 import './styles.css'
-import { createPlayer } from "./game.js"
+import { createPlayer } from './game.js'
 
 const THREE_SECONDS = 3000
 const human = createPlayer('human')
@@ -13,7 +13,6 @@ renderGameboard('human')
 renderGameboard('computer')
 randomiseShipPlacements(human.gameboard)
 randomiseShipPlacements(computer.gameboard)
-
 
 function renderGameboard(type) {
   const targetId = type + '-gameboard'
@@ -51,7 +50,7 @@ function flipTurn() {
   if (isHumanTurn === true) {
     humanUI.classList.add('inactive')
     computerUI.classList.remove('inactive')
-    computerGameboard.addEventListener('click', sendAttack, {once: true})
+    computerGameboard.addEventListener('click', sendAttack, { once: true })
   } else {
     humanUI.classList.remove('inactive')
     computerUI.classList.add('inactive')
@@ -64,12 +63,12 @@ function updateInstruction(text) {
   instruction.textContent = text
 }
 
-computerGameboard.addEventListener('click', sendAttack, {once: true})
+computerGameboard.addEventListener('click', sendAttack, { once: true })
 
 function sendAttack(button) {
   if (button.target.classList.contains('hit') || button.target.classList.contains('miss')) {
     alert('The same point cannot be attacked twice!')
-    computerGameboard.addEventListener('click', sendAttack, {once: true})
+    computerGameboard.addEventListener('click', sendAttack, { once: true })
     return
   }
   const targetId = button.target.id
@@ -89,7 +88,7 @@ function renderAttack(attack, type) {
     const shipStatus = checkSunk(attack, type)
     if (shipStatus === undefined) {
       // no ship has been sunk, just show generic message
-      updateInstruction("Hit!")
+      updateInstruction('Hit!')
     } else {
       // a ship has been sunk, check if all ships of a player are sunk, otherwise show sunk ship message
       if (computer.gameboard.areAllShipsSunk()) {
@@ -99,11 +98,11 @@ function renderAttack(attack, type) {
         endGame('computer')
         return
       }
-      updateInstruction("Hit! " + shipStatus)
+      updateInstruction('Hit! ' + shipStatus)
     }
   } else {
     point.classList.add('miss')
-    updateInstruction("Miss!")
+    updateInstruction('Miss!')
   }
   setTimeout(() => {
     flipTurn()
@@ -112,7 +111,7 @@ function renderAttack(attack, type) {
     } else {
       updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
     }
-  }, THREE_SECONDS);
+  }, THREE_SECONDS)
 }
 
 function checkSunk(attack, type) {
@@ -121,14 +120,14 @@ function checkSunk(attack, type) {
       return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
     })
     if (hitShip !== undefined && hitShip.isSunk()) {
-        return "You sunk the computer's " + hitShip.length + '-long ship!'
+      return "You sunk the computer's " + hitShip.length + '-long ship!'
     }
   } else if (type === 'human') {
     const hitShip = human.gameboard.ships.find((ship) => {
       return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
     })
     if (hitShip !== undefined && hitShip.isSunk()) {
-      return 'The computer sunk your ' + hitShip.length + '-long ship!' 
+      return 'The computer sunk your ' + hitShip.length + '-long ship!'
     }
   }
 }
@@ -149,26 +148,28 @@ function computerAttack() {
   } else {
     setTimeout(() => {
       renderAttack(human.gameboard.receiveAttack(attack.x, attack.y), 'human')
-    }, THREE_SECONDS);
+    }, THREE_SECONDS)
   }
 }
 
 function endGame(winner) {
   if (winner === 'human') {
-    updateInstruction("Human Wins! All computer ships have been sunk! Refresh the page to play again...")
+    updateInstruction(
+      'Human Wins! All computer ships have been sunk! Refresh the page to play again...'
+    )
     const humanName = document.querySelector('.human-title')
     humanName.classList.add('winner')
     humanUI.classList.remove('inactive')
     computerUI.classList.add('disabled')
-    alert("Human Wins! All computer ships have been sunk!")
+    alert('Human Wins! All computer ships have been sunk!')
   } else if (winner === 'computer') {
-    updateInstruction("Computer Wins! All human ships have been sunk!")
+    updateInstruction('Computer Wins! All human ships have been sunk!')
     const computerName = document.querySelector('.computer-title')
     computerName.classList.add('winner')
     computerUI.classList.remove('inactive')
     computerUI.classList.add('inactive')
     renderComputerShips()
-    alert("Computer Wins! All human ships have been sunk! Refresh the page to play again...")
+    alert('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
   }
 }
 
@@ -198,9 +199,19 @@ function randomiseShipPlacements(gameboard) {
   gameboard.ships = []
   while (gameboard.ships.length < 5) {
     if (randomNumber(1, 2) === 1) {
-      const result = gameboard.placeShip(gameboard.ships.length + 1, 'horizontal', randomNumber(1, 10), randomNumber(1, 10))
+      const result = gameboard.placeShip(
+        gameboard.ships.length + 1,
+        'horizontal',
+        randomNumber(1, 10),
+        randomNumber(1, 10)
+      )
     } else if (randomNumber(1, 2) === 2) {
-      const result = gameboard.placeShip(gameboard.ships.length + 1, 'vertical', randomNumber(1, 10), randomNumber(1, 10))
+      const result = gameboard.placeShip(
+        gameboard.ships.length + 1,
+        'vertical',
+        randomNumber(1, 10),
+        randomNumber(1, 10)
+      )
     }
   }
   renderHumanShips()

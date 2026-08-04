@@ -3,9 +3,9 @@ export function createShip(length, direction, x, y) {
     const coordinates = []
     for (let i = 0; i < length; i++) {
       if (direction === 'horizontal') {
-        coordinates.push({x: x + i, y})
+        coordinates.push({ x: x + i, y })
       } else {
-        coordinates.push({x, y: y + i})
+        coordinates.push({ x, y: y + i })
       }
     }
     return coordinates
@@ -33,7 +33,10 @@ export function createGameboard() {
     placeShip(length, direction, x, y) {
       const newShip = createShip(length, direction, x, y)
       // check if ship is placed/extends out of the gameboard
-      if ((direction === 'horizontal' && x + length > 11 )||(direction === 'vertical' && y + length > 11)) {
+      if (
+        (direction === 'horizontal' && x + length > 11) ||
+        (direction === 'vertical' && y + length > 11)
+      ) {
         return null
       }
       // check if ship coords overlap
@@ -56,12 +59,12 @@ export function createGameboard() {
         for (const coord of ship.coordinates) {
           if (coord.x === targetX && coord.y === targetY) {
             ship.hit()
-            this.hits.push({x: targetX, y: targetY, type: 'hit'})
+            this.hits.push({ x: targetX, y: targetY, type: 'hit' })
             return this.hits.at(-1)
           }
         }
       }
-      this.misses.push({x: targetX, y: targetY, type: 'miss'})
+      this.misses.push({ x: targetX, y: targetY, type: 'miss' })
       return this.misses.at(-1)
     },
     areAllShipsSunk() {
