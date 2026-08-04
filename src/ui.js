@@ -64,6 +64,11 @@ function updateInstruction(text) {
 computerGameboard.addEventListener('click', sendAttack, {once: true})
 
 function sendAttack(button) {
+  if (button.target.classList.contains('hit') || button.target.classList.contains('miss')) {
+    alert('The same point cannot be attacked twice!')
+    computerGameboard.addEventListener('click', sendAttack, {once: true})
+    return
+  }
   const targetId = button.target.id
   // split the id up into its different components for easier use
   const targetIdArray = targetId.split('-')
