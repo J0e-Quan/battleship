@@ -110,7 +110,7 @@ h2 {
   border: 1px solid black;
 }
 
-.computer.gameboard-wrapper:not(.inactive) .point:hover:not(.hit, .miss) {
+.computer.gameboard-wrapper:not(.inactive, .disabled) .point:hover:not(.hit, .miss) {
   background-color: white;
 }
 
@@ -132,4 +132,9 @@ h2 {
 
 .miss {
   background-color: rgb(67, 67, 67);
+}
+
+.winner {
+  font-size: 3rem;
+  color: gold;
 }

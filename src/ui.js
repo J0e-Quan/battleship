@@ -6,6 +6,8 @@ const human = createPlayer('human')
 const computer = createPlayer('computer')
 const humanGameboard = document.getElementById('human-gameboard')
 const computerGameboard = document.getElementById('computer-gameboard')
+const humanUI = document.querySelector('.human.gameboard-wrapper')
+const computerUI = document.querySelector('.computer.gameboard-wrapper')
 let isHumanTurn = true
 renderGameboard('human')
 renderGameboard('computer')
@@ -43,8 +45,6 @@ function renderHumanShips() {
 
 function flipTurn() {
   isHumanTurn = !isHumanTurn
-  const humanUI = document.querySelector('.human.gameboard-wrapper')
-  const computerUI = document.querySelector('.computer.gameboard-wrapper')
   if (isHumanTurn === true) {
     humanUI.classList.add('inactive')
     computerUI.classList.remove('inactive')
@@ -85,17 +85,17 @@ function renderAttack(attack, type) {
     point.classList.add('hit')
     const shipStatus = checkSunk(attack, type)
     if (shipStatus === undefined) {
+      // no ship has been sunk, just show generic message
       updateInstruction("Hit!")
     } else {
-        if (computer.gameboard.areAllShipsSunk()) {
-          alert("Human Wins! All computer ships have been sunk!")
-          updateInstruction("Human Wins! All computer ships have been sunk!")
-          return
-        } else if (human.gameboard.areAllShipsSunk()) {
-          alert("Computer Wins! All human ships have been sunk!")
-          updateInstruction("Computer Wins! All human ships have been sunk!")
-          return
-        }
+      // a ship has been sunk, check if all ships of a player are sunk, otherwise show sunk ship message
+      if (computer.gameboard.areAllShipsSunk()) {
+        endGame('human')
+        return
+      } else if (human.gameboard.areAllShipsSunk()) {
+        endGame('computer')
+        return
+      }
       updateInstruction("Hit! " + shipStatus)
     }
   } else {
@@ -147,5 +147,23 @@ function computerAttack() {
     setTimeout(() => {
       renderAttack(human.gameboard.receiveAttack(attack.x, attack.y), 'human')
     }, THREE_SECONDS);
+  }
+}
+
+function endGame(winner) {
+  if (winner === 'human') {
+    updateInstruction("Human Wins! All computer ships have been sunk!")
+    const humanName = document.querySelector('.human-title')
+    humanName.classList.add('winner')
+    humanUI.classList.remove('inactive')
+    computerUI.classList.add('disabled')
+    alert("Human Wins! All computer ships have been sunk!")
+  } else if (winner === 'computer') {
+    updateInstruction("Computer Wins! All human ships have been sunk!")
+    const computerName = document.querySelector('.computer-title')
+    computerName.classList.add('winner')
+    computerUI.classList.remove('inactive')
+    computerUI.classList.add('inactive')
+    alert("Computer Wins! All human ships have been sunk!")
   }
 }
