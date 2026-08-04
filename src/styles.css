@@ -76,6 +76,7 @@ h1 {
   width: fit-content;
   margin-inline: auto;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .gameboards {

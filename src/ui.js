@@ -1,6 +1,7 @@
 import './styles.css'
 import { createPlayer } from "./game.js"
 
+const THREE_SECONDS = 3000
 const human = createPlayer('human')
 const computer = createPlayer('computer')
 const humanGameboard = document.getElementById('human-gameboard')
@@ -80,9 +81,9 @@ function renderAttack(attack, type) {
     point.classList.add('miss')
     updateInstruction("Miss!")
   }
-  const THREE_SECONDS = 3000
   setTimeout(() => {
     flipTurn()
     updateInstruction("It's the computer's turn!")
   }, THREE_SECONDS);
 }
+
