@@ -217,13 +217,3 @@ function randomiseShipPlacements(gameboard) {
   }
   renderHumanShips()
 }
-
-// hi again.
-
-// fix eslint not working and push all remaining commits (remember to use npm run deploy to setup gh pages)
-
-// then, make a new branch to implement 2-player mode (can be accessed through a button in .ui-buttons or a
-// dropdown/toggle thing next to the battleship logo)
-
-// once that's implemented, setup the README, gather all needed assets and wrap up the project. see if there's
-// anything else that can be added later on.

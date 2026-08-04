@@ -2,7 +2,7 @@
 
 Battleship project based on The Odin Project curriculum.
 
-Live demo link:
+Live demo link: https://j0e-quan.github.io/battleship/
 
 ## Technologies used:
 
