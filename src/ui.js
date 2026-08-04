@@ -4,7 +4,6 @@ import { createPlayer } from './game.js'
 const THREE_SECONDS = 3000
 const human = createPlayer('human')
 const computer = createPlayer('computer')
-const humanGameboard = document.getElementById('human-gameboard')
 const computerGameboard = document.getElementById('computer-gameboard')
 const humanUI = document.querySelector('.human.gameboard-wrapper')
 const computerUI = document.querySelector('.computer.gameboard-wrapper')
@@ -160,12 +159,14 @@ function endGame(winner) {
     const humanName = document.querySelector('.human-title')
     humanName.classList.add('winner')
     humanUI.classList.remove('inactive')
+    computerUI.classList.remove('inactive')
     computerUI.classList.add('disabled')
     alert('Human Wins! All computer ships have been sunk!')
   } else if (winner === 'computer') {
     updateInstruction('Computer Wins! All human ships have been sunk!')
     const computerName = document.querySelector('.computer-title')
     computerName.classList.add('winner')
+    humanUI.classList.remove('inactive')
     computerUI.classList.remove('inactive')
     computerUI.classList.add('inactive')
     renderComputerShips()
@@ -199,14 +200,14 @@ function randomiseShipPlacements(gameboard) {
   gameboard.ships = []
   while (gameboard.ships.length < 5) {
     if (randomNumber(1, 2) === 1) {
-      const result = gameboard.placeShip(
+      gameboard.placeShip(
         gameboard.ships.length + 1,
         'horizontal',
         randomNumber(1, 10),
         randomNumber(1, 10)
       )
     } else if (randomNumber(1, 2) === 2) {
-      const result = gameboard.placeShip(
+      gameboard.placeShip(
         gameboard.ships.length + 1,
         'vertical',
         randomNumber(1, 10),
@@ -216,3 +217,13 @@ function randomiseShipPlacements(gameboard) {
   }
   renderHumanShips()
 }
+
+// hi again.
+
+// fix eslint not working and push all remaining commits (remember to use npm run deploy to setup gh pages)
+
+// then, make a new branch to implement 2-player mode (can be accessed through a button in .ui-buttons or a
+// dropdown/toggle thing next to the battleship logo)
+
+// once that's implemented, setup the README, gather all needed assets and wrap up the project. see if there's
+// anything else that can be added later on.

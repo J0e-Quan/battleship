@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url'
 import js from '@eslint/js'
 import globals from 'globals'
 import prettierConfig from 'eslint-config-prettier'
-import { defineConfig } from 'eslint/config'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
