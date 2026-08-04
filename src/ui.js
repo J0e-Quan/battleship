@@ -225,6 +225,7 @@ function startGame() {
   } else if (mode === 'human') {
     updateInstruction("Player 2, choose the position of your ships!")
     startButton.textContent = 'Start Game'
+    swapShips(2)
     blockPeeking(2)
   }
 }
@@ -267,4 +268,8 @@ function blockPeeking(nextPlayer) {
   })
   modal.appendChild(closeButton)
   document.body.appendChild(modal)
+}
+
+function swapShips(currentPlayer) {
+  
 }

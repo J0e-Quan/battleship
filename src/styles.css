@@ -118,16 +118,20 @@ h2 {
   filter: brightness(0.5);
 }
 
-.ship {
+.ship, .p1-ship {
   background-color: #1a3be0;
 }
 
-.computer.hit {
+.computer.hit, .p2-ship {
   background-color: rgb(206, 26, 26);
 }
 
-.human.hit {
+.human.hit, .p1-ship.hit {
   background-color: #06165e;
+}
+
+.p2-ship-hit {
+  background-color: rgb(67, 0, 0);
 }
 
 .miss {
