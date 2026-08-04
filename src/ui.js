@@ -23,7 +23,7 @@ function renderGameboard(type) {
     for (let x = 1; x < 11; x++) {
       const point = document.createElement('button')
       point.type = 'button'
-      point.classList.add('point')
+      point.classList.add('point', type)
       point.id = type + '-' + x + '-' + y
       row.appendChild(point)
     }
@@ -40,16 +40,25 @@ function renderHumanShips() {
   }
 }
 
-computerGameboard.addEventListener('click', sendHit)
+computerGameboard.addEventListener('click', sendAttack)
 
-function sendHit(button) {
+function sendAttack(button) {
   const targetId = button.target.id
   // split the id up into its different components for easier use
   const targetIdArray = targetId.split('-')
   const targetDetails = {
-    x: targetIdArray[1],
-    y: targetIdArray[2]
+    x: Number(targetIdArray[1]),
+    y: Number(targetIdArray[2])
   }
-  const result = computer.gameboard.receiveAttack(targetDetails.x, targetDetails.y)
-  console.log(result)
+  renderAttack(computer.gameboard.receiveAttack(targetDetails.x, targetDetails.y), 'computer')
+}
+
+function renderAttack(attack, type) {
+  const point = document.getElementById(type + '-' + attack.x + '-' + attack.y)
+  console.log(attack.type)
+  if (attack.type === 'hit') {
+    point.classList.add('hit')
+  } else {
+    point.classList.add('miss')
+  }
 }

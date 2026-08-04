@@ -120,3 +120,11 @@ h2 {
 .ship {
   background-color: #1a3be0;
 }
+
+.computer.hit {
+  background-color: rgb(206, 26, 26);
+}
+
+.computer.miss {
+  background-color: black;
+}
