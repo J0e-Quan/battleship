@@ -4,6 +4,7 @@ import { createPlayer } from './game.js'
 const THREE_SECONDS = 3000
 const human = createPlayer('human')
 const computer = createPlayer('computer')
+const humanGameboard = document.getElementById('human-gameboard')
 const computerGameboard = document.getElementById('computer-gameboard')
 const humanUI = document.querySelector('.human.gameboard-wrapper')
 const computerUI = document.querySelector('.computer.gameboard-wrapper')
@@ -35,12 +36,16 @@ function renderHumanShips() {
   // clear gameboard of all ships before rendering new ones
   const allPoints = document.querySelectorAll('.human.point')
   allPoints.forEach((point) => {
-    point.classList.remove('ship')
+    point.classList.remove('ship', 'p1-ship')
   })
   for (const ship of human.gameboard.ships) {
     for (const coord of ship.coordinates) {
       const point = document.getElementById('human-' + coord.x + '-' + coord.y)
-      point.classList.add('ship')
+      if (mode === 'computer'){
+        point.classList.add('ship')
+      } else {
+        point.classList.add('p1-ship')
+      }
     }
   }
 }
@@ -191,9 +196,27 @@ function renderComputerShips() {
   }
 }
 
+function renderP2Ships() {
+  // clear gameboard of all ships before rendering new ones
+  const allPoints = document.querySelectorAll('.computer.point')
+  allPoints.forEach((point) => {
+    point.classList.remove('p2-ship')
+  })
+  for (const ship of computer.gameboard.ships) {
+    for (const coord of ship.coordinates) {
+      const point = document.getElementById('computer-' + coord.x + '-' + coord.y)
+      point.classList.add('p2-ship')
+    }
+  }
+}
+
 const randomiseButton = document.querySelector('.randomise')
 randomiseButton.addEventListener('click', (e) => {
-  randomiseShipPlacements(human.gameboard)
+  if (mode === 'computer' ||( mode === 'human' && document.querySelector('.instruction').textContent.includes('1'))) {
+    randomiseShipPlacements(human.gameboard)
+  } else if (mode === 'human' && document.querySelector('.instruction').textContent.includes('2')) {
+    randomiseShipPlacements(computer.gameboard)
+  }
 })
 const startButton = document.querySelector('.start')
 startButton.addEventListener('click', startGame)
@@ -220,8 +243,11 @@ function randomiseShipPlacements(gameboard) {
       )
     }
   }
-  renderHumanShips()
-}
+  if (mode === 'computer' ||( mode === 'human' && document.querySelector('.instruction').textContent.includes('1'))) {
+    renderHumanShips()
+  } else if (mode === 'human' && document.querySelector('.instruction').textContent.includes('2')) {
+    renderP2Ships()
+  }}
 
 function startGame() {
   if (mode === 'computer') {
@@ -232,6 +258,8 @@ function startGame() {
   } else if (mode === 'human') {
     updateInstruction("Player 2, choose the position of your ships!")
     startButton.textContent = 'Start Game'
+    humanUI.classList.add('inactive')
+    computerUI.classList.remove('inactive')
     swapShips(2)
     blockPeeking(2)
   }
@@ -240,12 +268,8 @@ function startGame() {
 function changeMode(toggle) {
   mode = toggle.target.value
   if (mode === 'computer') {
-    const p1Title = document.querySelector('.human-title')
-    p1Title.textContent = 'Human'
-    const p2Title = document.querySelector('.computer-title')
-    p2Title.textContent = 'Computer'
-    startButton.textContent = 'Start Game'
-    updateInstruction('Choose the position of your ships!')
+    // since the default mode is 'computer', refreshing the page is easier than rebuilding and resetting the ui
+    location.reload()
   } else if (mode === 'human') {
     const p1Title = document.querySelector('.human-title')
     p1Title.textContent = 'Player 1'
@@ -278,5 +302,20 @@ function blockPeeking(nextPlayer) {
 }
 
 function swapShips(currentPlayer) {
-  
+  if (currentPlayer === 1) {
+    const enemyPoints = document.querySelectorAll('.p2-ship')
+    enemyPoints.forEach((point) => {
+      point.classList.remove('p2-ship')
+    })
+    renderHumanShips()
+  } else if (currentPlayer === 2) {
+    const enemyPoints = document.querySelectorAll('.ship, .p1-ship')
+    console.log(enemyPoints)
+    enemyPoints.forEach((point) => {
+      console.log('before: ' + point.classList)
+      point.classList.remove('p1-ship', 'ship')
+      console.log('after: ' + point.classList)
+    })
+    renderP2Ships()
+  }
 }
