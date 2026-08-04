@@ -113,7 +113,7 @@ function checkSunk(attack, type) {
         if (computer.gameboard.areAllShipsSunk()) {
           endGame('human')
         }
-        return 'You sunk a ' + hitShip.length + '-long ship!'
+        return "You sunk the computer's " + hitShip.length + '-long ship!'
       }
     }
   } else if (type === 'human') {
