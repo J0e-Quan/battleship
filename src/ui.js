@@ -167,7 +167,17 @@ function endGame(winner) {
     computerName.classList.add('winner')
     computerUI.classList.remove('inactive')
     computerUI.classList.add('inactive')
+    renderComputerShips()
     alert("Computer Wins! All human ships have been sunk! Refresh the page to play again...")
+  }
+}
+
+function renderComputerShips() {
+  for (const ship of computer.gameboard.ships) {
+    for (const coord of ship.coordinates) {
+      const point = document.getElementById('computer-' + coord.x + '-' + coord.y)
+      point.classList.add('hit')
+    }
   }
 }
 
