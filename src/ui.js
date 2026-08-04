@@ -40,6 +40,24 @@ function renderHumanShips() {
   }
 }
 
+function flipTurn() {
+  isHumanTurn = !isHumanTurn
+  const humanUI = document.querySelector('.human.gameboard-wrapper')
+  const computerUI = document.querySelector('.computer.gameboard-wrapper')
+  if (isHumanTurn === true) {
+    humanUI.classList.add('inactive')
+    computerUI.classList.remove('inactive')
+  } else {
+    humanUI.classList.remove('inactive')
+    computerUI.classList.add('inactive')
+  }
+}
+
+function updateInstruction(text) {
+  const instruction = document.querySelector('.instruction')
+  instruction.textContent = text
+}
+
 computerGameboard.addEventListener('click', sendAttack)
 
 function sendAttack(button) {
@@ -55,10 +73,16 @@ function sendAttack(button) {
 
 function renderAttack(attack, type) {
   const point = document.getElementById(type + '-' + attack.x + '-' + attack.y)
-  console.log(attack.type)
   if (attack.type === 'hit') {
     point.classList.add('hit')
+    updateInstruction("Hit!")
   } else {
     point.classList.add('miss')
+    updateInstruction("Miss!")
   }
+  const THREE_SECONDS = 3000
+  setTimeout(() => {
+    flipTurn()
+    updateInstruction("It's the computer's turn!")
+  }, THREE_SECONDS);
 }
