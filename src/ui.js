@@ -114,19 +114,26 @@ function renderAttack(attack, type) {
 }
 
 function checkSunk(attack, type) {
+  const shipNames = {
+    1: 'Patrol Boat',
+    2: 'Submarine',
+    3: 'Cruiser',
+    4: 'Battleship',
+    5: 'Aircraft Carrier'
+  }
   if (type === 'computer') {
     const hitShip = computer.gameboard.ships.find((ship) => {
       return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
     })
     if (hitShip !== undefined && hitShip.isSunk()) {
-      return "You sunk the computer's " + hitShip.length + '-long ship!'
+      return "You sunk the computer's " + shipNames[hitShip.length] + '!'
     }
   } else if (type === 'human') {
     const hitShip = human.gameboard.ships.find((ship) => {
       return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
     })
     if (hitShip !== undefined && hitShip.isSunk()) {
-      return 'The computer sunk your ' + hitShip.length + '-long ship!'
+      return 'The computer sunk your ' + shipNames[hitShip.length] + '!'
     }
   }
 }
