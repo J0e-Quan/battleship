@@ -11,11 +11,9 @@ const computerUI = document.querySelector('.computer.gameboard-wrapper')
 let isHumanTurn = true
 renderGameboard('human')
 renderGameboard('computer')
+randomiseShipPlacements(human.gameboard)
+randomiseShipPlacements(computer.gameboard)
 
-// temporary hardcoded ship placements
-human.gameboard.placeShip(1, 'horizontal', 2, 3).placeShip(2, 'vertical', 4, 1).placeShip(3, 'vertical', 6, 3).placeShip(4, 'horizontal', 3, 9).placeShip(5, 'horizontal', 5, 7)
-computer.gameboard.placeShip(1, 'horizontal', 8, 9).placeShip(2, 'vertical', 2, 1).placeShip(3, 'vertical', 7, 3).placeShip(4, 'horizontal', 3, 8).placeShip(5, 'horizontal', 1, 6)
-renderHumanShips()
 
 function renderGameboard(type) {
   const targetId = type + '-gameboard'
@@ -35,6 +33,11 @@ function renderGameboard(type) {
 }
 
 function renderHumanShips() {
+  // clear gameboard of all ships before rendering new ones
+  const allPoints = document.querySelectorAll('.human.point')
+  allPoints.forEach((point) => {
+    point.classList.remove('ship')
+  })
   for (const ship of human.gameboard.ships) {
     for (const coord of ship.coordinates) {
       const point = document.getElementById('human-' + coord.x + '-' + coord.y)
@@ -166,4 +169,22 @@ function endGame(winner) {
     computerUI.classList.add('inactive')
     alert("Computer Wins! All human ships have been sunk!")
   }
+}
+
+const randomiseButton = document.querySelector('.randomise')
+randomiseButton.addEventListener('click', (e) => {
+  randomiseShipPlacements(human.gameboard)
+})
+
+function randomiseShipPlacements(gameboard) {
+  // clear ships array before inserting new ones
+  gameboard.ships = []
+  while (gameboard.ships.length < 5) {
+    if (randomNumber(1, 2) === 1) {
+      const result = gameboard.placeShip(gameboard.ships.length + 1, 'horizontal', randomNumber(1, 10), randomNumber(1, 10))
+    } else if (randomNumber(1, 2) === 2) {
+      const result = gameboard.placeShip(gameboard.ships.length + 1, 'vertical', randomNumber(1, 10), randomNumber(1, 10))
+    }
+  }
+  renderHumanShips()
 }
