@@ -206,38 +206,68 @@ function computerAttack() {
 
 function endGame(winner) {
   if (winner === 'human') {
-    if (mode === 'computer') {
-      updateInstruction('Human Wins! All computer ships have been sunk! Refresh the page to play again...')
-    } else if (mode === 'human') {
-      updateInstruction('Player 1 Wins! All Player 2 ships have been sunk! Refresh the page to play again...')
-    }
     const humanName = document.querySelector('.human-title')
     humanName.classList.add('winner')
     humanUI.classList.remove('inactive')
     computerUI.classList.remove('inactive')
     computerUI.classList.add('disabled')
-    alert('Player 1 Wins! All Player 2 ships have been sunk! Refresh the page to play again...')
-  } else if (winner === 'computer') {
     if (mode === 'computer') {
-      updateInstruction('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
+      updateInstruction('Human Wins! All computer ships have been sunk! Refresh the page to play again...')
+      alert('Human Wins! All computer ships have been sunk! Refresh the page to play again...')
     } else if (mode === 'human') {
-      updateInstruction('Player 2 Wins! All Player 1 ships have been sunk! Refresh the page to play again...')
+      updateInstruction('Player 1 Wins! All Player 2 ships have been sunk! Refresh the page to play again...')
+      alert('Player 1 Wins! All Player 2 ships have been sunk! Refresh the page to play again...')
+      revealP1Ships()
     }
+  } else if (winner === 'computer') {
     const computerName = document.querySelector('.computer-title')
     computerName.classList.add('winner')
     humanUI.classList.remove('inactive')
     computerUI.classList.remove('inactive')
     computerUI.classList.add('inactive')
-    renderComputerShips()
-    alert('Player 2 Wins! All Player 1 ships have been sunk! Refresh the page to play again...')
+    if (mode === 'computer') {
+      updateInstruction('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
+      alert('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
+      revealComputerShips()
+    } else if (mode === 'human') {
+      updateInstruction('Player 2 Wins! All Player 1 ships have been sunk! Refresh the page to play again...')
+      alert('Player 2 Wins! All Player 1 ships have been sunk! Refresh the page to play again...')
+      revealP2Ships()
+    }
   }
 }
 
-function renderComputerShips() {
+function revealComputerShips() {
   for (const ship of computer.gameboard.ships) {
     for (const coord of ship.coordinates) {
       const point = document.getElementById('computer-' + coord.x + '-' + coord.y)
       point.classList.add('hit')
+    }
+  }
+}
+
+function revealP1Ships() {
+  for (const ship of human.gameboard.ships) {
+    for (const coord of ship.coordinates) {
+      const point = document.getElementById('human-' + coord.x + '-' + coord.y)
+      if (!point.classList.contains('p1-ship-hit')) {
+        point.classList.add('p1-ship')
+      } else {
+        point.classList.add('p1-ship-hit')
+      }
+    }
+  }
+}
+
+function revealP2Ships() {
+  for (const ship of computer.gameboard.ships) {
+    for (const coord of ship.coordinates) {
+      const point = document.getElementById('computer-' + coord.x + '-' + coord.y)
+      if (!point.classList.contains('p2-ship-hit')) {
+        point.classList.add('p2-ship')
+      } else {
+        point.classList.add('p2-ship-hit')
+      }
     }
   }
 }
