@@ -73,7 +73,7 @@ function updateInstruction(text) {
 }
 
 function sendAttack(button) {
-  if (button.target.classList.contains('hit') || button.target.classList.contains('miss')) {
+  if (button.target.classList.contains('hit') || button.target.classList.contains('miss') || button.target.classList.contains('p1-ship-hit') || button.target.classList.contains('p2-ship-hit')) {
     alert('The same point cannot be attacked twice!')
     if (mode === 'computer' || (mode === 'human' && isHumanTurn === true)) {
       computerGameboard.addEventListener('click', sendAttack, { once: true })

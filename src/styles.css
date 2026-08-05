@@ -110,7 +110,7 @@ h2 {
   border: 1px solid black;
 }
 
-.gameboard-wrapper:not(.inactive, .disabled, .no-hover) .point:hover:not(.hit, .miss) {
+.gameboard-wrapper:not(.inactive, .no-hover) .point:hover:not(.hit, .miss, .p1-ship-hit, .p2-ship-hit) {
   background-color: white;
 }
 
