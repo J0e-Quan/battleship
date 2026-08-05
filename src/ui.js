@@ -207,7 +207,7 @@ function endGame(winner) {
     humanName.classList.add('winner')
     humanUI.classList.remove('inactive')
     computerUI.classList.remove('inactive')
-    computerUI.classList.add('disabled')
+    computerUI.classList.add('no-hover')
     if (mode === 'computer') {
       updateInstruction('Human Wins! All computer ships have been sunk! Refresh the page to play again...')
       alert('Human Wins! All computer ships have been sunk! Refresh the page to play again...')
@@ -221,7 +221,7 @@ function endGame(winner) {
     computerName.classList.add('winner')
     humanUI.classList.remove('inactive')
     computerUI.classList.remove('inactive')
-    computerUI.classList.add('disabled')
+    computerUI.classList.add('no-hover')
     if (mode === 'computer') {
       updateInstruction('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
       alert('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
