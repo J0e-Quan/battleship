@@ -126,7 +126,7 @@ h2 {
   background-color: rgb(206, 26, 26);
 }
 
-.human.hit, .p1-ship.hit {
+.human.hit, .p1-ship-hit {
   background-color: #06165e;
 }
 

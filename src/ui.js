@@ -59,7 +59,11 @@ function flipTurn() {
   } else {
     humanUI.classList.remove('inactive')
     computerUI.classList.add('inactive')
-    computerAttack()
+    if (mode === 'computer') {
+      computerAttack()
+    } else if (mode === 'human') {
+      humanGameboard.addEventListener('click' , sendAttack, {once: true})
+    }
   }
 }
 
@@ -68,12 +72,17 @@ function updateInstruction(text) {
   instruction.textContent = text
 }
 
+// human / player 1 starts first
 computerGameboard.addEventListener('click', sendAttack, { once: true })
 
 function sendAttack(button) {
   if (button.target.classList.contains('hit') || button.target.classList.contains('miss')) {
     alert('The same point cannot be attacked twice!')
-    computerGameboard.addEventListener('click', sendAttack, { once: true })
+    if (mode === 'computer' || (mode === 'human' && isHumanTurn === true)) {
+      computerGameboard.addEventListener('click', sendAttack, { once: true })
+    } else if (mode === 'human' && isHumanTurn === false) {
+      humanGameboard.addEventListener('click', sendAttack, {once: true})
+    }
     return
   }
   const targetId = button.target.id
@@ -83,13 +92,23 @@ function sendAttack(button) {
     x: Number(targetIdArray[1]),
     y: Number(targetIdArray[2])
   }
-  renderAttack(computer.gameboard.receiveAttack(targetDetails.x, targetDetails.y), 'computer')
+  if (mode === 'computer' || (mode === 'human' && isHumanTurn === true)) {
+    renderAttack(computer.gameboard.receiveAttack(targetDetails.x, targetDetails.y), 'computer')
+  } else if (mode === 'human' && isHumanTurn === false) {
+    renderAttack(human.gameboard.receiveAttack(targetDetails.x, targetDetails.y), 'human')
+  }
 }
 
 function renderAttack(attack, type) {
   const point = document.getElementById(type + '-' + attack.x + '-' + attack.y)
   if (attack.type === 'hit') {
-    point.classList.add('hit')
+    if (mode === 'computer') {
+      point.classList.add('hit')
+    } else if (mode === 'human' && type === 'human') {
+      point.classList.add('p1-ship-hit')
+    } else if (mode === 'human' && type === 'computer') {
+      point.classList.add('p2-ship-hit')
+    }
     const shipStatus = checkSunk(attack, type)
     if (shipStatus === undefined) {
       // no ship has been sunk, just show generic message
@@ -115,12 +134,16 @@ function renderAttack(attack, type) {
       if (mode === 'computer') {
         updateInstruction("It's the computer's turn!")
       } else if (mode === 'human') {
+        blockPeeking(2)
+        swapShips(2)
         updateInstruction("It's Player 2's turn! Pick any point on Player 1's gameboard to hit!")
       }
     } else {
       if (mode === 'computer') {
         updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
       } else if (mode === 'human') {
+        blockPeeking(1)
+        swapShips(1)
         updateInstruction("It's Player 1's turn! Pick any point on Player 2's gameboard to hit!")
       }
     }
