@@ -72,9 +72,6 @@ function updateInstruction(text) {
   instruction.textContent = text
 }
 
-// human / player 1 starts first
-computerGameboard.addEventListener('click', sendAttack, { once: true })
-
 function sendAttack(button) {
   if (button.target.classList.contains('hit') || button.target.classList.contains('miss')) {
     alert('The same point cannot be attacked twice!')
