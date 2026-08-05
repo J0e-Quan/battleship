@@ -112,9 +112,17 @@ function renderAttack(attack, type) {
   setTimeout(() => {
     flipTurn()
     if (isHumanTurn === false) {
-      updateInstruction("It's the computer's turn!")
+      if (mode === 'computer') {
+        updateInstruction("It's the computer's turn!")
+      } else if (mode === 'human') {
+        updateInstruction("It's Player 2's turn! Pick any point on Player 1's gameboard to hit!")
+      }
     } else {
-      updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
+      if (mode === 'computer') {
+        updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
+      } else if (mode === 'human') {
+        updateInstruction("It's Player 1's turn! Pick any point on Player 2's gameboard to hit!")
+      }
     }
   }, THREE_SECONDS)
 }
@@ -132,14 +140,23 @@ function checkSunk(attack, type) {
       return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
     })
     if (hitShip !== undefined && hitShip.isSunk()) {
-      return "You sunk the computer's " + shipNames[hitShip.length] + '!'
+      if (mode === 'computer') {
+        return "You sunk the computer's " + shipNames[hitShip.length] + '!'
+      } else if (mode === 'human') {
+        return "You sunk Player 2's " + shipNames[hitShip.length] + '!'
+      }
     }
   } else if (type === 'human') {
     const hitShip = human.gameboard.ships.find((ship) => {
       return ship.coordinates.some((coord) => coord.x === attack.x && coord.y === attack.y)
     })
     if (hitShip !== undefined && hitShip.isSunk()) {
-      return 'The computer sunk your ' + shipNames[hitShip.length] + '!'
+      if (mode === 'computer') {
+        return 'The computer sunk your ' + shipNames[hitShip.length] + '!'
+      } else if (mode === 'human') {
+        return "You sunk Player 1's " + shipNames[hitShip.length] + '!'
+      }
+      
     }
   }
 }
@@ -166,24 +183,30 @@ function computerAttack() {
 
 function endGame(winner) {
   if (winner === 'human') {
-    updateInstruction(
-      'Human Wins! All computer ships have been sunk! Refresh the page to play again...'
-    )
+    if (mode === 'computer') {
+      updateInstruction('Human Wins! All computer ships have been sunk! Refresh the page to play again...')
+    } else if (mode === 'human') {
+      updateInstruction('Player 1 Wins! All Player 2 ships have been sunk! Refresh the page to play again...')
+    }
     const humanName = document.querySelector('.human-title')
     humanName.classList.add('winner')
     humanUI.classList.remove('inactive')
     computerUI.classList.remove('inactive')
     computerUI.classList.add('disabled')
-    alert('Human Wins! All computer ships have been sunk!')
+    alert('Player 1 Wins! All Player 2 ships have been sunk! Refresh the page to play again...')
   } else if (winner === 'computer') {
-    updateInstruction('Computer Wins! All human ships have been sunk!')
+    if (mode === 'computer') {
+      updateInstruction('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
+    } else if (mode === 'human') {
+      updateInstruction('Player 2 Wins! All Player 1 ships have been sunk! Refresh the page to play again...')
+    }
     const computerName = document.querySelector('.computer-title')
     computerName.classList.add('winner')
     humanUI.classList.remove('inactive')
     computerUI.classList.remove('inactive')
     computerUI.classList.add('inactive')
     renderComputerShips()
-    alert('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
+    alert('Player 2 Wins! All Player 1 ships have been sunk! Refresh the page to play again...')
   }
 }
 
