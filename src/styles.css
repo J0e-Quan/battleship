@@ -110,7 +110,7 @@ h2 {
   border: 1px solid black;
 }
 
-.computer.gameboard-wrapper:not(.inactive, .disabled) .point:hover:not(.hit, .miss) {
+.gameboard-wrapper:not(.inactive, .disabled, .no-hover) .point:hover:not(.hit, .miss) {
   background-color: white;
 }
 

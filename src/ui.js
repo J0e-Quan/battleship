@@ -383,12 +383,16 @@ function blockPeeking(nextPlayer) {
 
 function swapShips(currentPlayer) {
   if (currentPlayer === 1) {
+    humanUI.classList.add('no-hover')
+    computerUI.classList.remove('no-hover')
     const enemyPoints = document.querySelectorAll('.p2-ship')
     enemyPoints.forEach((point) => {
       point.classList.remove('p2-ship')
     })
     renderHumanShips()
   } else if (currentPlayer === 2) {
+    humanUI.classList.remove('no-hover')
+    computerUI.classList.add('no-hover')
     const enemyPoints = document.querySelectorAll('.ship, .p1-ship')
     enemyPoints.forEach((point) => {
       point.classList.remove('p1-ship', 'ship')
