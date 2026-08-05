@@ -6,21 +6,24 @@ Live demo link: https://j0e-quan.github.io/battleship/
 
 ## Technologies used:
 
--
+- HTML for basic page layout
+- CSS for styling and use of web fonts (Inter and Urbanist)
+- JavaScript for game code and dynamically rendering game elements
 - npm and webpack for managing and bundling code modules
 - Git for version control
 
 ## Key features:
 
--
-
-## Credits:
-
--
+- Two modes, playing against a computer or second human player
+- UI elements are intuitive and dynamically hide/show depending on current player
+- "Swap screen" is present to prevent accidentally seeing the other player's ships in two-player mode
 
 ## Gallery:
 
-![alt-text](img-path)
+![Picture of initial state of the game](./readme-assets/initial.jpeg)
+![Picture of gameplay against a computer player](./readme-assets/gameplay-computer.jpeg)
+![Picture of 'Swap Screen'](./readme-assets/no-peeking.jpeg)
+![Picture of gameplay against a second human player](./readme-assets/gameplay-human.jpeg)
 
 ## Getting started:
 
