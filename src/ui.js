@@ -255,13 +255,20 @@ function startGame() {
     flipTurn()
     updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
     uiButtons.remove()
-  } else if (mode === 'human') {
+  } else if (mode === 'human' && document.querySelector('.instruction').textContent === 'Player 1, choose the position of your ships!') {
     updateInstruction("Player 2, choose the position of your ships!")
     startButton.textContent = 'Start Game'
     humanUI.classList.add('inactive')
     computerUI.classList.remove('inactive')
     swapShips(2)
     blockPeeking(2)
+  } else if (mode === 'human' && document.querySelector('.instruction').textContent === 'Player 2, choose the position of your ships!') {
+    const uiButtons = document.querySelector('.ui-buttons')
+    swapShips(1)
+    blockPeeking(1)
+    flipTurn()
+    updateInstruction("It's Player 1's turn! Pick any point on Player 2's gameboard to hit!")
+    uiButtons.remove()
   }
 }
 
@@ -310,11 +317,8 @@ function swapShips(currentPlayer) {
     renderHumanShips()
   } else if (currentPlayer === 2) {
     const enemyPoints = document.querySelectorAll('.ship, .p1-ship')
-    console.log(enemyPoints)
     enemyPoints.forEach((point) => {
-      console.log('before: ' + point.classList)
       point.classList.remove('p1-ship', 'ship')
-      console.log('after: ' + point.classList)
     })
     renderP2Ships()
   }
