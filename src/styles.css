@@ -110,7 +110,8 @@ h2 {
   border: 1px solid black;
 }
 
-.gameboard-wrapper:not(.inactive, .no-hover) .point:hover:not(.hit, .miss, .p1-ship-hit, .p2-ship-hit) {
+.gameboard-wrapper:not(.inactive, .no-hover)
+  .point:hover:not(.hit, .miss, .p1-ship-hit, .p2-ship-hit) {
   background-color: white;
 }
 
@@ -118,15 +119,18 @@ h2 {
   filter: brightness(0.5);
 }
 
-.ship, .p1-ship {
+.ship,
+.p1-ship {
   background-color: #1a3be0;
 }
 
-.computer.hit, .p2-ship {
+.computer.hit,
+.p2-ship {
   background-color: rgb(206, 26, 26);
 }
 
-.human.hit, .p1-ship-hit {
+.human.hit,
+.p1-ship-hit {
   background-color: #06165e;
 }
 

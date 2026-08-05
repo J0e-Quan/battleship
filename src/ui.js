@@ -41,7 +41,7 @@ function renderHumanShips() {
   for (const ship of human.gameboard.ships) {
     for (const coord of ship.coordinates) {
       const point = document.getElementById('human-' + coord.x + '-' + coord.y)
-      if (mode === 'computer'){
+      if (mode === 'computer') {
         point.classList.add('ship')
       } else {
         point.classList.add('p1-ship')
@@ -62,7 +62,7 @@ function flipTurn() {
     if (mode === 'computer') {
       computerAttack()
     } else if (mode === 'human') {
-      humanGameboard.addEventListener('click' , sendAttack, {once: true})
+      humanGameboard.addEventListener('click', sendAttack, { once: true })
     }
   }
 }
@@ -73,12 +73,17 @@ function updateInstruction(text) {
 }
 
 function sendAttack(button) {
-  if (button.target.classList.contains('hit') || button.target.classList.contains('miss') || button.target.classList.contains('p1-ship-hit') || button.target.classList.contains('p2-ship-hit')) {
+  if (
+    button.target.classList.contains('hit') ||
+    button.target.classList.contains('miss') ||
+    button.target.classList.contains('p1-ship-hit') ||
+    button.target.classList.contains('p2-ship-hit')
+  ) {
     alert('The same point cannot be attacked twice!')
     if (mode === 'computer' || (mode === 'human' && isHumanTurn === true)) {
       computerGameboard.addEventListener('click', sendAttack, { once: true })
     } else if (mode === 'human' && isHumanTurn === false) {
-      humanGameboard.addEventListener('click', sendAttack, {once: true})
+      humanGameboard.addEventListener('click', sendAttack, { once: true })
     }
     return
   }
@@ -137,7 +142,9 @@ function renderAttack(attack, type) {
       }
     } else {
       if (mode === 'computer') {
-        updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
+        updateInstruction(
+          "It's the human's turn! Pick any point on the computer's gameboard to hit!"
+        )
       } else if (mode === 'human') {
         blockPeeking(1)
         swapShips(1)
@@ -176,7 +183,6 @@ function checkSunk(attack, type) {
       } else if (mode === 'human') {
         return "You sunk Player 1's " + shipNames[hitShip.length] + '!'
       }
-      
     }
   }
 }
@@ -209,10 +215,14 @@ function endGame(winner) {
     computerUI.classList.remove('inactive')
     computerUI.classList.add('no-hover')
     if (mode === 'computer') {
-      updateInstruction('Human Wins! All computer ships have been sunk! Refresh the page to play again...')
+      updateInstruction(
+        'Human Wins! All computer ships have been sunk! Refresh the page to play again...'
+      )
       alert('Human Wins! All computer ships have been sunk! Refresh the page to play again...')
     } else if (mode === 'human') {
-      updateInstruction('Player 1 Wins! All Player 2 ships have been sunk! Refresh the page to play again...')
+      updateInstruction(
+        'Player 1 Wins! All Player 2 ships have been sunk! Refresh the page to play again...'
+      )
       alert('Player 1 Wins! All Player 2 ships have been sunk! Refresh the page to play again...')
       revealP1Ships()
     }
@@ -223,11 +233,15 @@ function endGame(winner) {
     computerUI.classList.remove('inactive')
     computerUI.classList.add('no-hover')
     if (mode === 'computer') {
-      updateInstruction('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
+      updateInstruction(
+        'Computer Wins! All human ships have been sunk! Refresh the page to play again...'
+      )
       alert('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
       revealComputerShips()
     } else if (mode === 'human') {
-      updateInstruction('Player 2 Wins! All Player 1 ships have been sunk! Refresh the page to play again...')
+      updateInstruction(
+        'Player 2 Wins! All Player 1 ships have been sunk! Refresh the page to play again...'
+      )
       alert('Player 2 Wins! All Player 1 ships have been sunk! Refresh the page to play again...')
       revealP2Ships()
     }
@@ -285,7 +299,10 @@ function renderP2Ships() {
 
 const randomiseButton = document.querySelector('.randomise')
 randomiseButton.addEventListener('click', (e) => {
-  if (mode === 'computer' ||( mode === 'human' && document.querySelector('.instruction').textContent.includes('1'))) {
+  if (
+    mode === 'computer' ||
+    (mode === 'human' && document.querySelector('.instruction').textContent.includes('1'))
+  ) {
     randomiseShipPlacements(human.gameboard)
   } else if (mode === 'human' && document.querySelector('.instruction').textContent.includes('2')) {
     randomiseShipPlacements(computer.gameboard)
@@ -316,11 +333,15 @@ function randomiseShipPlacements(gameboard) {
       )
     }
   }
-  if (mode === 'computer' ||( mode === 'human' && document.querySelector('.instruction').textContent.includes('1'))) {
+  if (
+    mode === 'computer' ||
+    (mode === 'human' && document.querySelector('.instruction').textContent.includes('1'))
+  ) {
     renderHumanShips()
   } else if (mode === 'human' && document.querySelector('.instruction').textContent.includes('2')) {
     renderP2Ships()
-  }}
+  }
+}
 
 function startGame() {
   if (mode === 'computer') {
@@ -328,14 +349,22 @@ function startGame() {
     flipTurn()
     updateInstruction("It's the human's turn! Pick any point on the computer's gameboard to hit!")
     uiButtons.remove()
-  } else if (mode === 'human' && document.querySelector('.instruction').textContent === 'Player 1, choose the position of your ships!') {
-    updateInstruction("Player 2, choose the position of your ships!")
+  } else if (
+    mode === 'human' &&
+    document.querySelector('.instruction').textContent ===
+      'Player 1, choose the position of your ships!'
+  ) {
+    updateInstruction('Player 2, choose the position of your ships!')
     startButton.textContent = 'Start Game'
     humanUI.classList.add('inactive')
     computerUI.classList.remove('inactive')
     swapShips(2)
     blockPeeking(2)
-  } else if (mode === 'human' && document.querySelector('.instruction').textContent === 'Player 2, choose the position of your ships!') {
+  } else if (
+    mode === 'human' &&
+    document.querySelector('.instruction').textContent ===
+      'Player 2, choose the position of your ships!'
+  ) {
     const uiButtons = document.querySelector('.ui-buttons')
     swapShips(1)
     blockPeeking(1)
@@ -368,12 +397,13 @@ function blockPeeking(nextPlayer) {
   modal.appendChild(title)
   const text = document.createElement('p')
   text.classList.add('modal-text')
-  text.textContent = "It's time to switch players! Please pass the device to Player " + nextPlayer + "!"
+  text.textContent =
+    "It's time to switch players! Please pass the device to Player " + nextPlayer + '!'
   modal.appendChild(text)
   const closeButton = document.createElement('button')
   closeButton.type = 'button'
   closeButton.classList.add('close', 'ui-button')
-  closeButton.textContent = "Done!"
+  closeButton.textContent = 'Done!'
   closeButton.addEventListener('click', (e) => {
     modal.remove()
   })
