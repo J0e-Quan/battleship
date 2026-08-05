@@ -224,7 +224,7 @@ function endGame(winner) {
     computerName.classList.add('winner')
     humanUI.classList.remove('inactive')
     computerUI.classList.remove('inactive')
-    computerUI.classList.add('inactive')
+    computerUI.classList.add('disabled')
     if (mode === 'computer') {
       updateInstruction('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
       alert('Computer Wins! All human ships have been sunk! Refresh the page to play again...')
